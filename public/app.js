@@ -1,3 +1,6 @@
+$(document).ready(function(){
+
+
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
     // For each one
@@ -41,7 +44,7 @@ $.getJSON("/articles", function(data) {
         }
       });
   });
-  
+})
   // When you click the savenote button
   $(document).on("click", "#savenote", function() {
     // Grab the id associated with the article from the submit button
