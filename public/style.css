@@ -1,11 +1,19 @@
 body{
     /*background-color: #DECADE*/
-    background-color: #F2F6D0
+    background-color: lightblue;
+  }
+  .jumbotron{
+      background-color: lightblue;
   }
   #wrapper{
+    border: transparent; border-radius: 10px;
+    background-color: lightgray;
     width:960px;
     margin: 0 auto;
     padding-top: 5%;
+  }
+  .heading{
+      margin-left: 60px;
   }
   #articles{
     width:100%;
@@ -21,7 +29,7 @@ body{
   textarea, input{
     display:block;
     width:100%;
-    background-color: #FCF5C7;
+    background-color: lightblue;
   }
   input{
     height:36px;
