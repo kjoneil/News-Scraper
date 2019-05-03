@@ -6,21 +6,32 @@ var mongoose = require('mongoose');
 var request = require('request');
 var cheerio = require('cheerio');
 
-// = Middleware (pass everything through the logger first) ================================================
+//  Middleware 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-app.use(express.static('public')); // (create a public folder and land there)
+app.use(express.static('public')); 
 
-mongoose.connect('mongodb://localhost/mongoosescraper');
-var db = mongoose.connection;
+// mongoose.connect('mongodb://localhost/mongoosescraper');
+// var db = mongoose.connection;
 
+// db.on("error", function(error) {
+//   console.log("Mongoose Error: ", error);
+// });
+
+// //   db through mongoose, log a success message
+// db.once("open", function() {
+//   console.log("Mongoose connection successful.");
+// });
+
+var MONGODB_URI = process.env.MONGODB_URI ||'mongodb://localhost/mongoHeadlines'
+mongoose.connect(MONGODB_URI);
 // requiring to models
 var Note = require('./models/Note.js');
 var Article = require('./models/Article.js');
 
-// = Routes ================================================================
+// Routes 
 app.get('/', function(req, res) {
   res.send(index.html); // sending the html file rather than rendering a handlebars file
 });
@@ -30,7 +41,7 @@ request("https://www.nytimes.com/section/science", function(error, response, htm
   var $ = cheerio.load(html);
   $('article h2').each(function(i, element) {
    
-    var query = "https://www.nytimes.com" + $(this).children('a').attr('href');
+    var query = ("https://www.nytimes.com/" + $(this).children('a').attr('href'));
     var result = {};
 
       result.title = $(this).children('a').text();
@@ -96,6 +107,6 @@ newNote.save(function(err, doc){
   }
 });
 });
-app.listen(3001, function() {
+app.listen(process.env.PORT||3001, function() {
 console.log('App running on port 3001!');
 });
